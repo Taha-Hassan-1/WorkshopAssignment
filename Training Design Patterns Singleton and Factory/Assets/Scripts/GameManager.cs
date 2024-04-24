@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,13 @@ public class GameManager : MonoBehaviour
     public GameObject Bullet; 
     public GameObject Grenade; 
     public GameObject Missile;
+    public static event Action OnGrenadeSpawn;
+    public static event Action OnBulletSpawn;
+    public static event Action OnMissileSpawn;
+    public int BulletCount = 0;
+    public int GrenadeCount = 0;
+    public int MissileCount = 0;
+
     public static GameManager Instance
     {
         get
@@ -30,34 +38,60 @@ public class GameManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
+            Initialize();
         }
         else
         {
             Destroy(gameObject);
         }
     }
+    public void Initialize()
+    {
+        AddListeners();
+    }
+    public void AddListeners()
+    {
+        
+    }
+    public void RemoveListeners()
+    {
+       
+    }
     private void Update()
     {
-        if (Input.GetKey(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B))
         {
             InstantiateWeapon("bullet");
         }
-        else if (Input.GetKey(KeyCode.G))
+        else if (Input.GetKeyDown(KeyCode.G))
         {
             InstantiateWeapon("grenade");
         }
-        else if (Input.GetKey(KeyCode.M))
+        else if (Input.GetKeyDown(KeyCode.M))
         {
             InstantiateWeapon("missile");
         }
+        //if (Input.GetKey(KeyCode.B))
+        //{
+        //    InstantiateWeapon("bullet");
+        //}
+        //else if (Input.GetKey(KeyCode.G))
+        //{
+        //    InstantiateWeapon("grenade");
+        //}
+        //else if (Input.GetKey(KeyCode.M))
+        //{
+        //    InstantiateWeapon("missile");
+        //}
         //else
         //    Debug.LogError("Wrong Key Pressed.");
     }
     public void InstantiateWeapon(string weaponType)
     {
         WeaponFactory weaponFactory = new WeaponFactory();
-        IWeapon weapon = weaponFactory.CreateWeapon(weaponType);
-        GameObject weaponObject = Instantiate(GetWeaponPrefab(weaponType), transform.position, Quaternion.identity);
+        IWeapon weapon = weaponFactory.CreateWeapon(weaponType, this);
+        GameObject weaponObject = Instantiate(GetWeaponPrefab(weaponType), transform.position , Quaternion.identity);
+        weapon.GetRandomPostion(weaponObject);
         weapon.Shoot(weaponObject);
     }
     private GameObject GetWeaponPrefab(string weaponType)
@@ -65,10 +99,13 @@ public class GameManager : MonoBehaviour
         switch (weaponType.ToLower())
         {
             case "bullet":
+                OnBulletSpawn.Invoke();
                 return Bullet;
             case "grenade":
+                OnGrenadeSpawn.Invoke();
                 return Grenade;
             case "missile":
+                OnMissileSpawn.Invoke();
                 return Missile;
             default:
                 {

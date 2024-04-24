@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class WeaponFactory
 {
-    public IWeapon CreateWeapon(string weaponType)
+    public IWeapon CreateWeapon(string weaponType, MonoBehaviour t)
     {
         switch (weaponType.ToLower())
         {
             case "bullet":
-                return new Bullet();
+                return new Bullet(t);
             case "grenade":
-                return new Grenade();
+                return new Grenade(t);
             case "missile":
-                return new Missile();
+                return new Missile(t);
             default:
                 throw new System.ArgumentException("Invalid weapon type");
         }

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8632952933724709729}
   - component: {fileID: 5946100469040200430}
-  - component: {fileID: 2789303158811678049}
   - component: {fileID: 3818205320074674495}
   m_Layer: 0
   m_Name: Grenade
@@ -46,18 +45,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8833082546414461124}
   m_CullTransparentMesh: 1
---- !u!114 &2789303158811678049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8833082546414461124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb200353d4c8ab6468a6071efa92f985, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &3818205320074674495
 SpriteRenderer:
   m_ObjectHideFlags: 0
